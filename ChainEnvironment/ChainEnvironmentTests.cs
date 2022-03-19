@@ -519,7 +519,7 @@ namespace FlowRunner.Engine.Tests
         [TestMethod()]
         public void CreateOrSetValue_LocalTest5() {
             frEnvironment upstairEnvironment = new frEnvironment();
-            IChainEnvironmentDataHolder upstairdataHolder = upstairEnvironment.GetDataHolder(typeof(string).AssemblyQualifiedName); ;
+            IChainEnvironmentDataHolder upstairdataHolder = upstairEnvironment.GetDataHolder(typeof(string).AssemblyQualifiedName);
 
             FloorDataFrame<string> upstairdataFloor = upstairdataHolder.GetField<FloorDataFrame<string>>("currentFloor");
             string variableName = "t";
@@ -527,13 +527,14 @@ namespace FlowRunner.Engine.Tests
             string newValue = "new-value";
 
             frEnvironment environment = new frEnvironment();
+            IChainEnvironmentDataHolder currentHolder = environment.GetDataHolder(typeof(string).AssemblyQualifiedName);
             environment.SetUpstairEnvironment_LooseConnection(upstairEnvironment);
-            FloorDataFrame<string> currentFloor = upstairdataHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            FloorDataFrame<string> currentFloor = currentHolder.GetField<FloorDataFrame<string>>("currentFloor");
 
             //チェン先に変数を追加
             upstairdataFloor.Variables.Add(variableName, oldValue);
 
-            environment.SetValue(variableName, newValue);
+            environment.CreateOrSetValue_Local(variableName, newValue);
 
             Assert.AreEqual(newValue, currentFloor.Variables[variableName]);
         }
