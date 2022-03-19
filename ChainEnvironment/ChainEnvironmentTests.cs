@@ -528,8 +528,8 @@ namespace FlowRunner.Engine.Tests
 
             frEnvironment environment = new frEnvironment();
             IChainEnvironmentDataHolder currentHolder = environment.GetDataHolder(typeof(string).AssemblyQualifiedName);
-            environment.SetUpstairEnvironment_LooseConnection(upstairEnvironment);
             FloorDataFrame<string> currentFloor = currentHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            environment.SetUpstairEnvironment_LooseConnection(upstairEnvironment);
 
             //チェン先に変数を追加
             upstairdataFloor.Variables.Add(variableName, oldValue);
