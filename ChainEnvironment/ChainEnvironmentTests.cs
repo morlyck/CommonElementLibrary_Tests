@@ -538,6 +538,34 @@ namespace FlowRunner.Engine.Tests
 
             Assert.AreEqual(newValue, currentFloor.Variables[variableName]);
         }
+        //マルチバンド
+        //付け替え
+        [TestMethod()]
+        public void CreateOrSetValue_LocalTest5_1() {
+            frEnvironment upstairEnvironment = new frEnvironment();
+            IChainEnvironmentDataHolder upstairdataHolder = upstairEnvironment.GetDataHolder(typeof(string).AssemblyQualifiedName); ;
+
+            FloorDataFrame<string> upstairdataFloor = upstairdataHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            string variableName = "t";
+            string oldValue = "old-value";
+            string newValue = "new-value";
+
+            frEnvironment environment = new frEnvironment();
+            IChainEnvironmentDataHolder currentHolder = environment.GetDataHolder(typeof(string).AssemblyQualifiedName);
+            FloorDataFrame<string> currentFloor = currentHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            MultiBandUpstairEnvironment multiBand = new MultiBandUpstairEnvironment(environment);
+            multiBand.UpstairEnvironments.Add(upstairEnvironment);
+
+            //チェン先に変数を追加
+            upstairdataFloor.Variables.Add(variableName, oldValue);
+
+            environment.CreateOrSetValue_Local<string>(variableName, newValue);
+
+            //付け替え
+            multiBand.TargetEnvironment = environment;
+
+            Assert.AreEqual(newValue, currentFloor.Variables[variableName]);
+        }
 
         #endregion
 
