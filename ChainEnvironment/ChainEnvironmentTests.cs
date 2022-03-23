@@ -20,6 +20,28 @@ namespace FlowRunner.Engine.Tests
     public class ChainEnvironmentTests
     {
 
+        #region(ClearOnlyLocal)
+        //現階層が大域環境の場合
+        [TestMethod()]
+        public void ClearOnlyLocalTest() {
+            frEnvironment environment = new frEnvironment();
+            IChainEnvironmentDataHolder dataHolder = environment.GetDataHolder(typeof(string).AssemblyQualifiedName); ;
+
+            FloorDataFrame<string> currentFloor = dataHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            string variableName_0 = "t_0";
+            string value = "value";
+
+            currentFloor.Variables.Add(variableName_0, value);
+
+            Assert.AreEqual(true, environment.Exists(variableName_0));
+
+            environment.ClearOnlyLocal();
+
+            Assert.AreEqual(false, environment.Exists(variableName_0));
+        }
+
+        #endregion
+
         #region(GetValue)
         //同階層に定義のある変数の値を取得しようとしたとき
         [TestMethod()]
