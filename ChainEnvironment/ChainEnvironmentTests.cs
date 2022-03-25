@@ -64,6 +64,29 @@ namespace FlowRunner.Engine.Tests
 
             Assert.AreEqual(false, environment.Exists(variableName_0));
         }
+
+        //チェーン設定ありの場合
+        [TestMethod()]
+        public void ClearOnlyLocalTest2() {
+            frEnvironment upstairEnvironment = new frEnvironment();
+            IChainEnvironmentDataHolder upstairdataHolder = upstairEnvironment.GetDataHolder(typeof(string).AssemblyQualifiedName); ;
+
+            FloorDataFrame<string> currentFloor = upstairdataHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            string variableName_0 = "t_0";
+            string value = "value";
+
+            frEnvironment environment = new frEnvironment();
+            environment.SetUpstairEnvironment_LooseConnection(upstairEnvironment);
+
+            currentFloor.Variables.Add(variableName_0, value);
+
+            Assert.AreEqual(true, environment.Exists(variableName_0));
+
+            environment.ClearOnlyLocal();
+
+            Assert.AreEqual(false, environment.Exists(variableName_0));
+
+        }
         #endregion
 
         #region(GetValue)
