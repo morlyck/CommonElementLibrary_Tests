@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Diagnostics;
+
 using Newtonsoft.Json;
 using CommonElement;
 
@@ -17,7 +19,19 @@ namespace CommonElement.Tests
     {
         [TestMethod()]
         public void SerializeTest() {
-            Assert.Fail();
+
+            string variableName = "t";
+            string value = "value";
+
+            FloorDataFrame<string> floorDataFrame = new FloorDataFrame<string>();
+            floorDataFrame.Variables.Add(variableName, value);
+
+            string text = floorDataFrame.Serialize(GeneralSd.Instance);
+
+            FloorDataFrame<string> floorDataFrameAfter = new FloorDataFrame<string>();
+            floorDataFrameAfter.Deserialize(GeneralSd.Instance, text);
+
+            Assert.AreEqual(value, floorDataFrameAfter.Variables[variableName]);
         }
     }
     #endregion
