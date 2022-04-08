@@ -33,6 +33,24 @@ namespace CommonElement.Tests
 
             Assert.AreEqual(value, floorDataFrameAfter.Variables[variableName]);
         }
+        [TestMethod()]
+        public void SerializeTest2() {
+
+            string variableName = "t";
+            int dataValue = 16;
+
+            FloorDataFrame<CustomSerializeClass> floorDataFrame = new FloorDataFrame<CustomSerializeClass>();
+            CustomSerializeClass custom = new CustomSerializeClass();
+            custom.Data = dataValue;
+            floorDataFrame.Variables.Add(variableName, custom);
+
+            string text = floorDataFrame.Serialize(GeneralSd.Instance);
+
+            FloorDataFrame<CustomSerializeClass> floorDataFrameAfter = new FloorDataFrame<CustomSerializeClass>();
+            floorDataFrameAfter.Deserialize(GeneralSd.Instance, text);
+
+            Assert.AreEqual(dataValue, floorDataFrameAfter.Variables[variableName].Data);
+        }
     }
     #endregion
 }
