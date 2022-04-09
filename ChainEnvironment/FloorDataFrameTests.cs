@@ -51,6 +51,25 @@ namespace CommonElement.Tests
 
             Assert.AreEqual(dataValue, floorDataFrameAfter.Variables[variableName].Data);
         }
+        [TestMethod()]
+        public void SerializeTest3() {
+
+            string variableName = "t";
+            string variableName2 = "et";
+            int dataValue = 16;
+
+            FloorDataFrame<ChainEnvironment> floorDataFrame = new FloorDataFrame<ChainEnvironment>();
+            ChainEnvironment env = new ChainEnvironment();
+            env.SetValue<int>(variableName2, dataValue);
+            floorDataFrame.Variables.Add(variableName, env);
+
+            string text = floorDataFrame.Serialize(GeneralSd.Instance);
+
+            FloorDataFrame<ChainEnvironment> floorDataFrameAfter = new FloorDataFrame<ChainEnvironment>();
+            floorDataFrameAfter.Deserialize(GeneralSd.Instance, text);
+
+            Assert.AreEqual(dataValue, floorDataFrameAfter.Variables[variableName].GetValue<int>(variableName2));
+        }
     }
     #endregion
 }
