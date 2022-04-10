@@ -74,6 +74,25 @@ namespace CommonElement.Tests
     #endregion
 }
 
+public class CustomSerializeClassSdReady
+{
+    public int Data = 0;
+}
+public class CustomSerializeClass : ICustomSerialize
+{
+    public string Serialize(ISerializerAndDeserializer serializer) {
+        CustomSerializeClassSdReady sdReady = new CustomSerializeClassSdReady();
+        sdReady.Data = Data;
+
+        return serializer.Serialize(sdReady);
+    }
+    public void Deserialize(ISerializerAndDeserializer deserializer, string text) {
+        CustomSerializeClassSdReady sdReady = deserializer.Deserialize<CustomSerializeClassSdReady>(text);
+        Data = sdReady.Data;
+    }
+
+    public int Data = 0;
+}
 
 public class GeneralSd : CommonElement.ISerializerAndDeserializer
 {
