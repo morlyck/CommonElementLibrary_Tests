@@ -118,7 +118,7 @@ public class GeneralSd : CommonElement.ISerializerAndDeserializer
     }
 
     public object Deserialize(Type typ, string jsonText) {
-        throw new NotImplementedException();
+        return JsonConvert.DeserializeObject(jsonText, typ);
     }
 
     public string SerializeCustomOrBasic(object obj) {
