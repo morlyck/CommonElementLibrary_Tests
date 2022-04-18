@@ -794,7 +794,25 @@ namespace FlowRunner.Engine.Tests
         }
         #endregion
 
-        #region()
+        #region(Version)
+        //バージョン情報が出力されていること
+        [TestMethod()]
+        public void VersionTest() {
+            frEnvironment environment = new frEnvironment();
+
+            IChainEnvironmentDataHolder dataHolder = environment.GetDataHolder(typeof(string).AssemblyQualifiedName); ;
+
+            FloorDataFrame<string> currentFloor = dataHolder.GetField<FloorDataFrame<string>>("currentFloor");
+            string variableName = "t";
+            string value = "t-value";
+
+            currentFloor.Variables.Add(variableName, value);
+
+            string text = environment.Serialize(GeneralSd.Instance);
+            var temp = text.Substring(0, text.IndexOf(","));
+            Assert.AreEqual(frEnvironment.Version, text.Substring(0, text.IndexOf(",")));
+
+        }
         #endregion
 
     }
