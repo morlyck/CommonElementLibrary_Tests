@@ -132,4 +132,8 @@ public class GeneralSd : CommonElement.ISerializerAndDeserializer
     public object DeserializeCustomOrBasic(Type typ, string jsonText) {
         throw new NotImplementedException();
     }
+
+    public string Serialize_Indented(object obj) {
+        throw new NotImplementedException();
+    }
 }
